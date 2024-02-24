@@ -49,7 +49,7 @@ app.post("/signup", async (req, res) => {
             to: `${result.email}`, // list of receivers
             subject: "Registered  Successfully on mensAura", // Subject line
             text: "Hello world?", // plain text body
-            html: `<div><p>On behalf of the entire team of Mens's Aura, I'm delighted to extend a warm welcome to you! Thank you for choosing us. Don't hesitate to contact us any time</p></div>`, // html body
+            html: `<div><p>On behalf of the entire team of Mens's Aura, I'm delighted to extend a warm welcome to you! Thank you for choosing us. Don't hesitate to contact us any time</p>Regards, <a href="rohit10503.github.io/sem4">Rohitkumar Pandey</a></div>`, // html body
         });
 
         const sendMail = async (transporter, mailOption) => {
