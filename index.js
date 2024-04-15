@@ -5,14 +5,16 @@ const app = express();
 const nodemailer = require("nodemailer");
 
 require("./db/config");
+
 const User = require("./db/userSchema");
 const Product = require("./db/productSchema");
 const Cart = require("./db/cartSchema");
 const Order = require("./db/myorderSchema")
-
-
 app.use(express.json())
 const cors = require("cors");
+
+
+
 app.use(cors());
 app.post("/signup", async (req, res) => {
 
@@ -88,6 +90,7 @@ app.get("/", async (req, res) => {
     let products = await Product.find({});
     if (products.length > 0) {
         res.send(products);
+     
     }
     else {
         res.send({ result: "None" })
@@ -108,7 +111,7 @@ app.get("/visit/:id", async (req, res) => {
 app.post("/cart-push", async (req, res) => {
 
 
-    let carts_product = new Cart(req.body)
+    let carts_product = new Cart(req.body);
     let result = await carts_product.save();
     res.send({ result: "success" })
 
@@ -172,7 +175,10 @@ app.get("/order/:user_id", async (req, res) => {
     }
 })
 
-
+app.get("/getarray",(req,res)=>{
+    
+    res.send(displayFolderItems)
+})
 
 
 app.listen(process.env.port || 5000);

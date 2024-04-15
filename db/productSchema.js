@@ -1,9 +1,12 @@
 const mongoose=require("mongoose");
 const productSchema=new mongoose.Schema({
-    name: String,
-    img:String,
-    price:String,
-    company:String,
+    Brand: String,
+    Title:String,
+    selling_Price:Number,
+    Price:Number,
+    Discount:String,
+    image_indices:Array,
+    
 
 });
 module.exports=mongoose.model("products",productSchema);
