@@ -87,7 +87,7 @@ app.post("/login", async (req, res) => {
 })
 
 app.get("/", async (req, res) => {
-    let products = await Product.find({});
+    let products = await Product.find({}).limit(10);
     if (products.length > 0) {
         res.send(products);
      
