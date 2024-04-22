@@ -34,8 +34,8 @@ def hello():
 @app.route('/predict/<prd_id>')
 def predict(prd_id=None):
   rec=recommendation(prd_id)
-  print(rec)
-  return f"{prd_id} \n {rec}"
+  # print(rec)
+  return f"{rec}"
     
 
 

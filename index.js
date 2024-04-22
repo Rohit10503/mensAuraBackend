@@ -100,12 +100,16 @@ app.get("/", async (req, res) => {
 app.get("/visit/:id", async (req, res) => {
     let prd_id = req.params.id;
     let result = await Product.findOne({ _id: prd_id });
+    let recommend_id=await fetch("https://mensaura-ml.onrender.com/predict/66213cc8b41698340dff8532")
+    // recommend_id=await JSON.stringify(recommend_id)
+    console.log(recommend_id)
     if (result) {
         res.send(result);
     }
     else {
         res.send({ result: "not found" });
     }
+
 })
 
 app.post("/cart-push", async (req, res) => {
