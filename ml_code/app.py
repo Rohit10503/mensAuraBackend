@@ -19,7 +19,7 @@ def recommendation(productId):
   recommend_product = []
   for i in products_list:
     recommend_product.append(products.iloc[i[0]]._id)
-    print(recommend_product)
+    # print(recommend_product)
   return recommend_product
 
 
@@ -35,7 +35,7 @@ def hello():
 def predict(prd_id=None):
   rec=recommendation(prd_id)
   print(rec)
-  return f"{prd_id}"
+  return f"{prd_id} \n {rec}"
     
 
 
