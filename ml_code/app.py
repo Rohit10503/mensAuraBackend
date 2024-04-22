@@ -25,6 +25,10 @@ def recommendation(productId):
 
 # recommendation("66213cc8b41698340dff8532")
 
+@app.route('/')
+def hello():
+  return f"/predict/66213cc8b41698340dff8532"
+
 
 @app.route('/predict/')
 @app.route('/predict/<prd_id>')
