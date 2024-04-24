@@ -16,7 +16,7 @@ def recommendation(productId):
   product_index = products[products["_id"] == productId].index[0]
   distances = similarity[product_index]
   products_list = sorted(list(enumerate(distances)),reverse=True,key=lambda x: x[1])[20:35]
-  recommend_product = []
+  recommend_product = {}
   for i in products_list:
     recommend_product.append(products.iloc[i[0]]._id)
     # print(recommend_product)

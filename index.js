@@ -16,6 +16,8 @@ const cors = require("cors");
 
 
 app.use(cors());
+
+const axios = require("axios")
 app.post("/signup", async (req, res) => {
 
     let check_present = await User.findOne({ email: req.body.email });
@@ -90,25 +92,52 @@ app.get("/", async (req, res) => {
     let products = await Product.find({}).limit(10);
     if (products.length > 0) {
         res.send(products);
-     
+        
     }
     else {
         res.send({ result: "None" })
     }
+    let try_to_activate_ml=await fetch("https://mensaura-ml.onrender.com/")
 })
 
 app.get("/visit/:id", async (req, res) => {
     let prd_id = req.params.id;
     let result = await Product.findOne({ _id: prd_id });
-    let recommend_id=await fetch("https://mensaura-ml.onrender.com/predict/66213cc8b41698340dff8532")
-    // recommend_id=await JSON.stringify(recommend_id)
-    console.log(recommend_id)
+
     if (result) {
+
+        let result1 = []
+        await axios.get(`https://mensaura-ml.onrender.com/predict/${prd_id}`)
+            .then(response => {
+                let data = response.data;
+                array = data.slice(1, -1).split(", ")
+                array = array.map(item => item.slice(1, -1));  // Remove quotes from each item
+                let promises = array.map(item => {
+                    return Product.findOne({ _id: item }).exec();  
+                });
+
+                // Resolve all promises
+                return Promise.all(promises);
+
+
+            })
+            .then(individualItems => {
+                result1 = individualItems
+                // res.send(result1);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+            result = { ...result._doc, recommendedProducts: result1 };
         res.send(result);
     }
     else {
         res.send({ result: "not found" });
     }
+
+
+
+
 
 })
 
@@ -170,17 +199,17 @@ app.post("/order", async (req, res) => {
 
 app.get("/order/:user_id", async (req, res) => {
     let userId = req.params.user_id;
-    let result = await Order.find({ userid : userId });
-    if(result){
-    res.send(result)
+    let result = await Order.find({ userid: userId });
+    if (result) {
+        res.send(result)
     }
-    else{
-        res.send({result:"empty"})
+    else {
+        res.send({ result: "empty" })
     }
 })
 
-app.get("/getarray",(req,res)=>{
-    
+app.get("/getarray", (req, res) => {
+
     res.send(displayFolderItems)
 })
 
