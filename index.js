@@ -92,12 +92,12 @@ app.get("/", async (req, res) => {
     let products = await Product.find({}).limit(10);
     if (products.length > 0) {
         res.send(products);
-        
+
     }
     else {
         res.send({ result: "None" })
     }
-    let try_to_activate_ml=await fetch("https://mensaura-ml.onrender.com/")
+    let try_to_activate_ml = await fetch("https://mensaura-ml.onrender.com/")
 })
 
 app.get("/visit/:id", async (req, res) => {
@@ -113,7 +113,7 @@ app.get("/visit/:id", async (req, res) => {
                 array = data.slice(1, -1).split(", ")
                 array = array.map(item => item.slice(1, -1));  // Remove quotes from each item
                 let promises = array.map(item => {
-                    return Product.findOne({ _id: item }).exec();  
+                    return Product.findOne({ _id: item }).exec();
                 });
 
                 // Resolve all promises
@@ -128,7 +128,7 @@ app.get("/visit/:id", async (req, res) => {
             .catch(error => {
                 console.error("Error:", error);
             });
-            result = { ...result._doc, recommendedProducts: result1 };
+        result = { ...result._doc, recommendedProducts: result1 };
         res.send(result);
     }
     else {
@@ -142,7 +142,6 @@ app.get("/visit/:id", async (req, res) => {
 })
 
 app.post("/cart-push", async (req, res) => {
-
 
     let carts_product = new Cart(req.body);
     let result = await carts_product.save();
@@ -214,4 +213,4 @@ app.get("/getarray", (req, res) => {
 })
 
 
-app.listen(process.env.port || 5432);
+app.listen(process.env.port || 5000);
